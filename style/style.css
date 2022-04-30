@@ -1,0 +1,24 @@
+.display {
+
+    border-style: solid;
+
+}
+
+button {
+
+    background-color: yellow;
+    width: 2em;
+    height: 2em;
+}
+
+.special-buttons {
+
+    background-color: green;
+
+}
+
+.operation-buttons {
+
+    background-color: red;
+
+}
