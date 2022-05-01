@@ -1,12 +1,12 @@
-function add(a, b) { return a + b }
+let add = function (a, b) { return a + b }
 
-function substract(a, b) { return a - b }
+let substract = function (a, b) { return a - b }
 
-function multiply(a, b) { return a * b }
+let multiply = function (a, b) { return a * b }
 
-function divide(a, b) { return a / b }
+let divide = function (a, b) { return a / b }
 
-function operate(operator, a, b) { return operator(a, b) }
+let operate = function (operator, a, b) { return operator(a, b) }
 
 let display = document.querySelector(".display")
 
@@ -17,75 +17,50 @@ let equalButton = document.querySelector(".equal-button")
 
 numberButtons.forEach(button => button.addEventListener("click", () => display.textContent += button.textContent))
 operationButtons.forEach(button => button.addEventListener("click", () => display.textContent += button.textContent))
-operationButtons.forEach(button => button.addEventListener("click", calculate))
 clearButton.addEventListener("click", () => display.textContent = "")
 
-function calculate() {
+equalButton.addEventListener("click", () => {
 
-    //two operand operations OK
-    // multiple operands same operation
-    
-    equalButton.addEventListener("click", () => {
+    let numbers = display.textContent.split(/[-×+÷]/).map(stringNumber => Number(stringNumber)).filter(number => number > 0)
 
-        console.log(`display: ${display.textContent}`)
-        console.log(`display array: [${display.textContent.split("")}]`)
-        console.log(`operator: ${display.textContent.match(/[-×+÷]/).join("")}`)
+    if (numbers.length <= 1) { return }
 
-        let numbers = display.textContent.split("")
-        let regex = display.textContent.match(/[-×+÷]/).join("")
+    let operators = display.textContent.match(/[-×+÷]/g).map(sign => {
 
-        console.log(`operatorIndex: ${numbers.findIndex(item => item == regex)}`)
+        if (sign == "-") { sign = substract }
+        if (sign == "×") { sign = multiply }
+        if (sign == "÷") { sign = divide }
+        if (sign == "+") { sign = add }
+        return sign
 
-        let operatorIndex = numbers.findIndex(item => item == regex)
-        let firstOperand = ""
-        let secondOperand = ""
+    })
 
-        for (let i = 0; i < operatorIndex; i++) {
+    console.log(`numbers: [${numbers}]`)
+    console.log(`operators: [${operators}]`)
+    console.log(numbers.length)
+    console.log(operators.length)
 
-            firstOperand += numbers[i]
-        }
+    if (operators.length >= numbers.length) { return display.textContent = "Malformed expression" }
 
-        for (let j = operatorIndex + 1; j < numbers.length; j++) {
+    if (operators.filter(operator => operator == multiply || operator == divide).length == 0 ||
+        operators.filter(operator => operator == add || operator == substract).length == 0) {
 
-            secondOperand += numbers[j]
-        }
+        return display.textContent = numbers.reduce((firstOperand, secondOperand) => {
 
-        firstOperand = Number(firstOperand)
-        secondOperand = Number(secondOperand)
+            let x = operators[0]
+            operators.shift()
+            return operate(x, firstOperand, secondOperand)
 
-        console.log(`first operand: ${firstOperand}`)
-        console.log(`second operand: ${secondOperand}`)
+        })
 
-        if (numbers[operatorIndex] == "×") {
+    }
 
-            console.log(`result: ${operate(multiply, firstOperand, secondOperand)}`)
-            display.textContent = operate(multiply, firstOperand, secondOperand)
 
-        }
 
-        if (numbers[operatorIndex] == "-") {
+})
 
-            console.log(`result: ${operate(substract, firstOperand, secondOperand)}`)
-            display.textContent = operate(substract, firstOperand, secondOperand)
-
-        }
-
-        if (numbers[operatorIndex] == "+") {
-
-            console.log(`result: ${operate(add, firstOperand, secondOperand)}`)
-            display.textContent = operate(add, firstOperand, secondOperand)
-
-        }
-
-        if (numbers[operatorIndex] == "÷") {
-
-            console.log(`result: ${operate(divide, firstOperand, secondOperand)}`)
-            display.textContent = operate(divide, firstOperand, secondOperand)
-
-        }
-
-    }, { once: true })
-
-}
+    //one operation OK
+    //multiple operations: operators with same precedence OK
+    //multiple operations: operators with different precedences
 
 

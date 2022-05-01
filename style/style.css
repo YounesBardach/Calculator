@@ -1,24 +1,45 @@
+.rows {
+
+    width: 10em;
+    border: thin solid;
+
+}
+
 .display {
 
-    border-style: solid;
+    height: 2em;
 
 }
 
 button {
 
-    background-color: yellow;
-    width: 2em;
-    height: 2em;
+    width: 25%;
+    height: 3em;
+    font-weight: bold;
+    border: thin solid;
 }
 
-.special-buttons {
+.number-buttons {
 
-    background-color: green;
+    background-color: yellow;
+
+}
+
+.erase-buttons {
+
+    background-color: lightblue;
 
 }
 
 .operation-buttons {
 
     background-color: red;
+
+}
+
+.equal-button {
+
+    width: 100%;
+    background-color: green;
 
 }
