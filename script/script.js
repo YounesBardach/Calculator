@@ -14,14 +14,24 @@ let numberButtons = document.querySelectorAll(".number-buttons")
 let operationButtons = document.querySelectorAll(".operation-buttons")
 let clearButton = document.querySelector(".clear-button")
 let backSpaceButton = document.querySelector(".backspace-button")
+let decimalsButton = document.querySelector(".decimals-button")
+
 let equalButton = document.querySelector(".equal-button")
 
 numberButtons.forEach(button => button.addEventListener("click", () => display.textContent += button.textContent))
 operationButtons.forEach(button => button.addEventListener("click", () => display.textContent += button.textContent))
 clearButton.addEventListener("click", () => display.textContent = "")
 backSpaceButton.addEventListener("click", () => display.textContent = display.textContent.slice(0, length - 1))
+decimalsButton.addEventListener("click", () => display.textContent += decimalsButton.textContent)
 
 equalButton.addEventListener("click", () => {
+
+    if (display.textContent.match(/\.\d+\.|\.\.|^\.+$/)) {
+
+        display.textContent = "Malformed expression"
+        return setTimeout(() => display.textContent = "", 2000)
+
+    }
 
     let numbers = display.textContent.split(/[-×+÷]/).filter(number => number != "").map(stringNumber => Number(stringNumber))
 
@@ -111,7 +121,7 @@ equalButton.addEventListener("click", () => {
     //multiple operations: operators with same precedence OK
     //0 division and multiplication OK
     //multiple operations: operators with different precedences OK
-    //decimals
+    //decimals 
     //chain of minuses/pluses
     //keyboard support
 

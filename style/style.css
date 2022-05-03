@@ -37,9 +37,15 @@ button {
 
 }
 
+.decimals-button {
+
+    width: 25%;
+    background-color: gray;
+
+}
 .equal-button {
 
-    width: 100%;
+    width: 75%;
     background-color: green;
 
 }
