@@ -13,17 +13,19 @@ let display = document.querySelector(".display")
 let numberButtons = document.querySelectorAll(".number-buttons")
 let operationButtons = document.querySelectorAll(".operation-buttons")
 let clearButton = document.querySelector(".clear-button")
+let backSpaceButton = document.querySelector(".backspace-button")
 let equalButton = document.querySelector(".equal-button")
 
 numberButtons.forEach(button => button.addEventListener("click", () => display.textContent += button.textContent))
 operationButtons.forEach(button => button.addEventListener("click", () => display.textContent += button.textContent))
 clearButton.addEventListener("click", () => display.textContent = "")
+backSpaceButton.addEventListener("click", () => display.textContent = display.textContent.slice(0, length - 1))
 
 equalButton.addEventListener("click", () => {
 
-    let numbers = display.textContent.split(/[-×+÷]/).map(stringNumber => Number(stringNumber)).filter(number => number > 0)
+    let numbers = display.textContent.split(/[-×+÷]/).filter(number => number != "").map(stringNumber => Number(stringNumber))
 
-    if (numbers.length <= 1) { return }
+    if (display.textContent.match(/[-×+÷]/g) == null) { return }
 
     let operators = display.textContent.match(/[-×+÷]/g).map(sign => {
 
@@ -35,32 +37,80 @@ equalButton.addEventListener("click", () => {
 
     })
 
-    console.log(`numbers: [${numbers}]`)
-    console.log(`operators: [${operators}]`)
-    console.log(numbers.length)
-    console.log(operators.length)
+    if (operators.length >= numbers.length) {
 
-    if (operators.length >= numbers.length) { return display.textContent = "Malformed expression" }
+        display.textContent = "Malformed expression"
+        return setTimeout(() => display.textContent = "", 2000)
+
+    }
+
+    let calculator = function (firstOperand, secondOperand) {
+
+        let x = operators[0]
+        operators.shift()
+        return operate(x, firstOperand, secondOperand)
+
+    }
 
     if (operators.filter(operator => operator == multiply || operator == divide).length == 0 ||
         operators.filter(operator => operator == add || operator == substract).length == 0) {
 
-        return display.textContent = numbers.reduce((firstOperand, secondOperand) => {
+        display.textContent = numbers.reduce(calculator)
 
-            let x = operators[0]
-            operators.shift()
-            return operate(x, firstOperand, secondOperand)
+        if (display.textContent == Infinity || display.textContent == -Infinity) {
 
-        })
+            display.textContent = "Division by zero is undefined"
+            return setTimeout(() => display.textContent = "", 2000)
+
+        }
+
+        if (display.textContent == "NaN") {
+
+            display.textContent = "0 ÷ 0 is an indeterminate form"
+            return setTimeout(() => display.textContent = "", 2000)
+
+        }
+
+        return
 
     }
 
+    let superiorOperatorsX = []
+    let superiorOperatorsDiv = []
 
+    for (let i = 0; i < operators.length; i++) {
+
+        superiorOperatorsX.push(display.textContent.match(/[-×+÷]/g).indexOf("×", i))
+
+    }
+
+    for (let i = 0; i < operators.length; i++) {
+
+        superiorOperatorsDiv.push(display.textContent.match(/[-×+÷]/g).indexOf("÷", i))
+
+    }
+
+    superiorOperatorsX = superiorOperatorsX.filter(item => item > -1)
+    superiorOperatorsDiv = superiorOperatorsDiv.filter(item => item > -1)
+    let superiorOperatorsIndexes = [...new Set([...superiorOperatorsX, ...superiorOperatorsDiv])].sort((a, b) => a - b)
+
+    superiorOperatorsIndexes.map(opind => {
+
+        numbers[opind + 1] = operate(operators[opind], numbers[opind], numbers[opind + 1])
+        numbers[opind] = ""
+
+    })
+
+    numbers = numbers.filter(number => number != "")
+    operators = operators.filter(op => op != divide && op != multiply)
+    display.textContent = numbers.reduce(calculator)
 
 })
 
     //one operation OK
     //multiple operations: operators with same precedence OK
-    //multiple operations: operators with different precedences
+    //0 division and multiplication OK
+    //multiple operations: operators with different precedences OK
+    //chain of minuses/pluses
 
 
