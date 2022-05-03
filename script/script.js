@@ -55,7 +55,7 @@ equalButton.addEventListener("click", () => {
     if (operators.filter(operator => operator == multiply || operator == divide).length == 0 ||
         operators.filter(operator => operator == add || operator == substract).length == 0) {
 
-        display.textContent = numbers.reduce(calculator)
+        display.textContent = Math.round(numbers.reduce(calculator) * 1000000000) / 1000000000
 
         if (display.textContent == Infinity || display.textContent == -Infinity) {
 
@@ -103,7 +103,7 @@ equalButton.addEventListener("click", () => {
 
     numbers = numbers.filter(number => number != "")
     operators = operators.filter(op => op != divide && op != multiply)
-    display.textContent = numbers.reduce(calculator)
+    display.textContent = Math.round(numbers.reduce(calculator) * 1000000000) / 1000000000
 
 })
 
@@ -111,6 +111,8 @@ equalButton.addEventListener("click", () => {
     //multiple operations: operators with same precedence OK
     //0 division and multiplication OK
     //multiple operations: operators with different precedences OK
+    //decimals
     //chain of minuses/pluses
+    //keyboard support
 
 
