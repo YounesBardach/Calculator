@@ -15,8 +15,17 @@ let operationButtons = document.querySelectorAll(".operation-buttons")
 let clearButton = document.querySelector(".clear-button")
 let backSpaceButton = document.querySelector(".backspace-button")
 let decimalsButton = document.querySelector(".decimals-button")
-
 let equalButton = document.querySelector(".equal-button")
+
+window.addEventListener("keydown", e => {
+
+    if (document.querySelector(`[data-key="${e.keyCode}"]`)) {
+
+        document.querySelector(`[data-key="${e.keyCode}"]`).click()
+
+    }
+
+})
 
 numberButtons.forEach(button => button.addEventListener("click", () => display.textContent += button.textContent))
 operationButtons.forEach(button => button.addEventListener("click", () => display.textContent += button.textContent))
@@ -121,8 +130,9 @@ equalButton.addEventListener("click", () => {
     //multiple operations: operators with same precedence OK
     //0 division and multiplication OK
     //multiple operations: operators with different precedences OK
-    //decimals 
+    //decimals OK
+    //keyboard support OK
     //chain of minuses/pluses
-    //keyboard support
+
 
 
