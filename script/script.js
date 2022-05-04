@@ -27,13 +27,44 @@ window.addEventListener("keydown", e => {
 
 })
 
-numberButtons.forEach(button => button.addEventListener("click", () => display.textContent += button.textContent))
-operationButtons.forEach(button => button.addEventListener("click", () => display.textContent += button.textContent))
-clearButton.addEventListener("click", () => display.textContent = "")
-backSpaceButton.addEventListener("click", () => display.textContent = display.textContent.slice(0, length - 1))
-decimalsButton.addEventListener("click", () => display.textContent += decimalsButton.textContent)
+numberButtons.forEach(button => button.addEventListener("click", () => {
+    
+    display.textContent += button.textContent
+    event.target.blur()
+
+}))
+
+operationButtons.forEach(button => button.addEventListener("click", () => {
+    
+    display.textContent += button.textContent
+    event.target.blur()
+
+}))
+
+clearButton.addEventListener("click", () => {
+    
+    display.textContent = ""
+    event.target.blur()
+
+})
+
+backSpaceButton.addEventListener("click", () => {
+    
+    display.textContent = display.textContent.slice(0, length - 1)
+    event.target.blur()
+
+})
+
+decimalsButton.addEventListener("click", () => {
+    
+    display.textContent += decimalsButton.textContent
+    event.target.blur()
+
+})
 
 equalButton.addEventListener("click", () => {
+
+    event.target.blur()
 
     if (display.textContent.match(/\.\d+\.|\.\.|^\.+$/)) {
 
@@ -48,14 +79,15 @@ equalButton.addEventListener("click", () => {
 
     }
 
-    // if (display.textContent.match(/^[+-]/)) {
-
-    //     let numbers = display.textContent.split(/[×÷]/).filter(number => number != "").map(stringNumber => Number(stringNumber))
-
-    // }
-
-
     let numbers = display.textContent.split(/[-×+÷]/).filter(number => number != "").map(stringNumber => Number(stringNumber))
+
+    while (display.textContent.search(/^[+-]/) != -1) {
+
+        let z = display.textContent.match(/^[+-]\d+/)
+        numbers[0] = Number(z)
+        display.textContent = display.textContent.split(/^[+-]/).filter(item => item != "").join("")
+
+    }
 
     if (display.textContent.match(/[-×+÷]/g) == null) { return }
 
@@ -146,6 +178,8 @@ equalButton.addEventListener("click", () => {
     //decimals OK
     //keyboard support OK
     //chain of minuses/pluses OK
+    //starting minus/plus OK
+    //Remove conflicts between clicks and keydowns from focus OK
 
 
 
