@@ -42,6 +42,19 @@ equalButton.addEventListener("click", () => {
 
     }
 
+    while (display.textContent.search(/[+-]{2}/) != -1) {
+
+        display.textContent = display.textContent.replace(/-\+|\+-/g, "-").replace(/[+]{2}|[-]{2}/g, "+")
+
+    }
+
+    // if (display.textContent.match(/^[+-]/)) {
+
+    //     let numbers = display.textContent.split(/[×÷]/).filter(number => number != "").map(stringNumber => Number(stringNumber))
+
+    // }
+
+
     let numbers = display.textContent.split(/[-×+÷]/).filter(number => number != "").map(stringNumber => Number(stringNumber))
 
     if (display.textContent.match(/[-×+÷]/g) == null) { return }
@@ -132,7 +145,7 @@ equalButton.addEventListener("click", () => {
     //multiple operations: operators with different precedences OK
     //decimals OK
     //keyboard support OK
-    //chain of minuses/pluses
+    //chain of minuses/pluses OK
 
 
 
