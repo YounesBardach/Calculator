@@ -1,21 +1,45 @@
+html, body {
+
+    height: 100%
+}
+
+body {
+
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .rows {
 
-    width: 10em;
+    width: 300px;
+    height: 60px;
     border: thin solid;
 
 }
 
 .display {
 
-    height: 2em;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    background-color: white;
+    word-break: break-all;
+    min-height: 60px;
+    height: auto;
+    
 }
 
 button {
 
     width: 25%;
-    height: 3em;
+    height: 100%;
     font-weight: bold;
+    font-size: xx-large;
     border: thin solid;
 }
 
@@ -43,10 +67,10 @@ button {
     background-color: gray;
 
 }
+
 .equal-button {
 
     width: 75%;
     background-color: green;
 
 }
-
