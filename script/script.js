@@ -28,35 +28,35 @@ window.addEventListener("keydown", e => {
 })
 
 numberButtons.forEach(button => button.addEventListener("click", () => {
-    
+
     display.textContent += button.textContent
     event.target.blur()
 
 }))
 
 operationButtons.forEach(button => button.addEventListener("click", () => {
-    
+
     display.textContent += button.textContent
     event.target.blur()
 
 }))
 
 clearButton.addEventListener("click", () => {
-    
+
     display.textContent = ""
     event.target.blur()
 
 })
 
 backSpaceButton.addEventListener("click", () => {
-    
+
     display.textContent = display.textContent.slice(0, length - 1)
     event.target.blur()
 
 })
 
 decimalsButton.addEventListener("click", () => {
-    
+
     display.textContent += decimalsButton.textContent
     event.target.blur()
 
@@ -79,17 +79,46 @@ equalButton.addEventListener("click", () => {
 
     }
 
-    let numbers = display.textContent.split(/[-×+÷]/).filter(number => number != "").map(stringNumber => Number(stringNumber))
+    if (display.textContent.match(/^[+-]\.*$/)) {
 
-    while (display.textContent.search(/^[+-]/) != -1) {
-
-        let z = display.textContent.match(/^[+-]\d+/)
-        numbers[0] = Number(z)
-        display.textContent = display.textContent.split(/^[+-]/).filter(item => item != "").join("")
+        display.textContent = "Malformed expression"
+        return setTimeout(() => display.textContent = "", 2000)
 
     }
 
-    if (display.textContent.match(/[-×+÷]/g) == null) { return }
+    let numbers = display.textContent.split(/[-×+÷]/).filter(number => number != "").map(stringNumber => Number(stringNumber))
+
+    let z
+
+    while (display.textContent.search(/^[+-]/) != -1) {
+
+        z = display.textContent.match(/^[+-][\d\.]+/)
+        numbers[0] = Number(z)
+
+        if (display.textContent.search(/^[-][.\d]+$/) != -1) { return }
+
+        display.textContent = display.textContent.replace(/^[+-]/, "")
+
+    }
+
+    if (display.textContent.match(/[×÷][+]/)) {
+
+        display.textContent = display.textContent.replace(/[×][+]/g, "×").replace(/[÷][+]/g, "÷")
+
+    }
+
+    let negCounter = null
+
+    let initialDisplay = display.textContent
+
+    if (display.textContent.match(/[×÷][-]/)) {
+
+        negCounter = display.textContent.match(/[×÷][-]/g).length
+        display.textContent = display.textContent.replace(/[×][-]/g, "×").replace(/[÷][-]/g, "÷")
+
+    }
+
+    if (!display.textContent.match(/[-×+÷]/g)) { return }
 
     let operators = display.textContent.match(/[-×+÷]/g).map(sign => {
 
@@ -135,7 +164,53 @@ equalButton.addEventListener("click", () => {
 
         }
 
+        if (negCounter % 2 != 0) { display.textContent = -display.textContent }
+
         return
+
+    }
+
+    if (negCounter != null) {
+
+        numbers = initialDisplay.split(/[×÷]-/)
+
+        let lastItem = numbers.pop()
+
+        numbers = numbers.map(number => {
+
+            if (number.search(/[-×+÷]/) != -1) {
+
+                let j = number.split(/[-×+÷]/)
+                j[j.length - 1] = -Number(j[j.length - 1])
+                number = j
+                return number
+
+            }
+
+            return -Number(number)
+
+        })
+
+        let destructure = []
+
+        for (let i = 0, j = 0; i < numbers.length; i++, j++) {
+
+            if (Array.isArray(numbers[i])) {
+
+                destructure[j] = numbers[i][0]
+                numbers[i].shift()
+                if (numbers[i].length != 0) { i-- }
+
+            }
+
+            else (destructure[j] = numbers[i])
+
+        }
+
+        destructure.push(...lastItem.split(/[-×+÷]/))
+        numbers = destructure.map(item => Number(item))
+
+        if (Number(z) < 0) {numbers[0] = -numbers[0]}
 
     }
 
@@ -165,9 +240,24 @@ equalButton.addEventListener("click", () => {
 
     })
 
-    numbers = numbers.filter(number => number != "")
+    numbers = numbers.filter(number => number !== "")
     operators = operators.filter(op => op != divide && op != multiply)
+
     display.textContent = Math.round(numbers.reduce(calculator) * 1000000000) / 1000000000
+
+    if (display.textContent == Infinity || display.textContent == -Infinity) {
+
+        display.textContent = "Division by zero is undefined"
+        return setTimeout(() => display.textContent = "", 2000)
+
+    }
+
+    if (display.textContent == "NaN") {
+
+        display.textContent = "0 ÷ 0 is an indeterminate form"
+        return setTimeout(() => display.textContent = "", 2000)
+
+    }
 
 })
 
