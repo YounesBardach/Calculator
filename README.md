@@ -35,6 +35,14 @@ of The Odin Project — Foundations.
 - GitHub Pages: https://younesbardach.github.io/Calculator/
 - Assignment: https://www.theodinproject.com/lessons/foundations-calculator
 
+## Quick start (local)
+
+No build step is required.
+
+1. Clone the repo
+2. Open `index.html` in your browser (or use a local server such as VS Code Live
+   Server)
+
 ## Features
 
 - Basic operations: add, subtract, multiply, divide
@@ -47,13 +55,18 @@ of The Odin Project — Foundations.
   `.`; `Enter` for equals, `Backspace` to erase, and `C` to clear
 - Friendly error messages for malformed expressions and division by zero
 
-## Quick start (local)
+## Tech stack
 
-No build step is required.
+- HTML5
+- CSS3
+- JavaScript
 
-1. Clone the repo
-2. Open `index.html` in your browser (or use a local server such as VS Code Live
-   Server)
+## Project structure
+
+- `index.html` — markup and button layout
+- `style/style.css` — styles for layout and buttons
+- `script/script.js` — calculator logic, including keyboard bindings and
+  expression handling
 
 ## Usage
 
@@ -67,16 +80,3 @@ No build step is required.
 - Consecutive operators are normalized (e.g., `--` -> `+`, `+-` -> `-`) where
   appropriate
 - Division by zero results in a non‑crashing message on the display
-
-## Project structure
-
-- `index.html` — markup and button layout
-- `style/style.css` — styles for layout and buttons
-- `script/script.js` — calculator logic, including keyboard bindings and
-  expression handling
-
-## Tech stack
-
-- HTML5
-- CSS3
-- JavaScript
