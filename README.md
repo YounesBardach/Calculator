@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://i.postimg.cc/mDJ2zzQL/Chat-GPT-Image-Aug-13-2025-12-36-17-AM.png" alt="Blog API Banner" width="900" />
+</p>
+
 # Calculator
 
 An on‑screen calculator built with HTML, CSS, and vanilla JavaScript. This
