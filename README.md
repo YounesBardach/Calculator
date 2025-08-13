@@ -56,9 +56,3 @@ Notes:
 
 The app is deployed with GitHub Pages from the `main` branch. Any push to `main`
 will trigger a new deployment.
-
-## Acknowledgements
-
-This project is based on The Odin Project’s Foundations assignment “Project:
-Calculator.” See the brief here:
-https://www.theodinproject.com/lessons/foundations-calculator
