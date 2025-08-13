@@ -2,15 +2,38 @@
   <img src="https://i.postimg.cc/mDJ2zzQL/Chat-GPT-Image-Aug-13-2025-12-36-17-AM.png" alt="Blog API Banner" width="900" />
 </p>
 
+<div align="center">
+
 # Calculator
 
-An on‑screen calculator built with HTML, CSS, and vanilla JavaScript. This
-project was created as part of The Odin Project Foundations curriculum to
-practise JavaScript fundamentals such as DOM manipulation, event handling, and
-implementing logic without relying on `eval()`.
+Practice project to build an on‑screen calculator using vanilla JavaScript. Part
+of The Odin Project — Foundations.
 
-• Live demo: https://younesbardach.github.io/Calculator/  
-• Assignment: https://www.theodinproject.com/lessons/foundations-calculator
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000)](https://developer.mozilla.org/docs/Web/JavaScript)
+[![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-222?logo=github&logoColor=white)](https://pages.github.com/)
+
+</div>
+
+---
+
+## Table of Contents
+
+- [Live URL](#live-url)
+- [Quick start (local)](#quick-start-local)
+- [Features](#features)
+- [Tech stack](#tech-stack)
+- [Project structure](#project-structure)
+- [Usage](#usage)
+- [Notes](#notes)
+
+---
+
+## Live URL
+
+- GitHub Pages: https://younesbardach.github.io/Calculator/
+- Assignment: https://www.theodinproject.com/lessons/foundations-calculator
 
 ## Features
 
@@ -24,7 +47,7 @@ implementing logic without relying on `eval()`.
   `.`; `Enter` for equals, `Backspace` to erase, and `C` to clear
 - Friendly error messages for malformed expressions and division by zero
 
-## Getting started
+## Quick start (local)
 
 No build step is required.
 
@@ -38,7 +61,7 @@ No build step is required.
 - Press `=` or `Enter` to evaluate
 - Press `C` to clear and `Backspace` to remove the last character
 
-Notes:
+## Notes
 
 - The calculator evaluates expressions according to operator precedence
 - Consecutive operators are normalized (e.g., `--` -> `+`, `+-` -> `-`) where
@@ -52,7 +75,8 @@ Notes:
 - `script/script.js` — calculator logic, including keyboard bindings and
   expression handling
 
-## Deployment
+## Tech stack
 
-The app is deployed with GitHub Pages from the `main` branch. Any push to `main`
-will trigger a new deployment.
+- HTML5
+- CSS3
+- JavaScript
